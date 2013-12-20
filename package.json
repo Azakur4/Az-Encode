@@ -1,0 +1,12 @@
+{
+    "name": "Azakur4.azenc",
+    "title": "Az - Encoding",
+    "description": "convert files that cannot read Brackets to UTF-8 make the file readable to Brackets.",
+    "homepage": "https://github.com/Azakur4/Az-Encode",
+    "version": "0.7.0",
+    "author": "Jimmy Brian Anamaria Torres <captasfire@hotmail.com>",
+    "license": "MIT",
+    "engines": {
+        "brackets": ">=0.34.0"
+    }
+}

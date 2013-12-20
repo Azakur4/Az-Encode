@@ -1,0 +1,19 @@
+a.btnConvert {
+    background-color: #ffffff;
+    display: inline-block;
+    padding: 2px 4px;
+    border-radius: 4px;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    width: 100px;
+}
+
+a.btnConvert:hover {
+    background-color: #e0f257;
+    color: #000;
+}
+
+a.btnConvert:active {
+    background-color: #3f5f38;
+    color: #fff;
+}

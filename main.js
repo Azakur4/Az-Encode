@@ -1,5 +1,5 @@
-/* jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
-/* global define, $, brackets */
+/*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
+/*global define, $, brackets */
 
 /** Simple extension that adds a "File > Hello World" menu item. Inserts "Hello, world!" at cursor pos. */
 define(function (require, exports, module) {
@@ -14,7 +14,6 @@ define(function (require, exports, module) {
         ExtensionUtils = brackets.getModule('utils/ExtensionUtils'),
         NodeConnection = brackets.getModule('utils/NodeConnection'),
         PanelManager = brackets.getModule('view/PanelManager'),
-        Resizer = brackets.getModule('utils/Resizer'),
         Dialogs = brackets.getModule("widgets/Dialogs");
         
         // Mustache templates
@@ -25,7 +24,7 @@ define(function (require, exports, module) {
     var files = [],
         $azPanel;
     
-    var nodeConnection;
+    var nodeConnection, azBkPanel;
     
     function chain() {
         var functions = Array.prototype.slice.call(arguments, 0);
@@ -72,17 +71,7 @@ define(function (require, exports, module) {
     }
     
     function showPanel(files) {
-        var panelHtml = Mustache.render(azEncPanelTemplate, '');
-        var azBkPanel = PanelManager.createBottomPanel('azenc.encoding.listfiles', $(panelHtml), 200);
-        $azPanel = $('#brackets-azenc');
-        Resizer.show($azPanel);
-        
-        $azPanel
-            .on('click', '.close', function () {
-                Resizer.hide($azPanel);
-            })
-            .on('click', '.btnConvert', convertFile);
-        
+        azBkPanel.show();
         showRows(files);
     }
     
@@ -145,6 +134,22 @@ define(function (require, exports, module) {
         
         ExtensionUtils.loadStyleSheet(module, "css/az.css");
     });
+    
+    
+    var panelHtml = Mustache.render(azEncPanelTemplate, '');
+    azBkPanel = PanelManager.createBottomPanel('azenc.encoding.listfiles', $(panelHtml), 200);
+    $azPanel = $('#brackets-azenc');
+    
+    $azPanel
+        .on('click', '.close', function () {
+            azBkPanel.hide();
+        })
+        .on('click', '.btnConvert', convertFile);
+    
+    $(ProjectManager).on("beforeProjectClose", function () {
+        azBkPanel.hide();
+    });
+    
     
     // First, register a command - a UI-less object associating an id to a handler
     var MY_COMMAND_ID = 'azenc.detectEncoding';   // package-style naming to avoid collisions

@@ -19,13 +19,15 @@
         for (i = 0; i < afiles.length; i++) {
             if (afiles[i] !== '.DS_Store') {
                 filePath = dirPath + afiles[i];
-                file = jschardet.detect(fs.readFileSync(filePath));
+                if (!fs.lstatSync(filePath).isDirectory()) {
+                    file = jschardet.detect(fs.readFileSync(filePath));
                 
-                file.name = afiles[i];
-                file.path = filePath;
-                file.confidence = file.confidence * 100;
-                
-                listFiles.push(file);
+                    file.name = afiles[i];
+                    file.path = filePath;
+                    file.confidence = file.confidence * 100;
+                    
+                    listFiles.push(file);
+                }
             }
         }
         

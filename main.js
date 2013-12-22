@@ -44,11 +44,11 @@ define(function (require, exports, module) {
         var $this = $(this),
             convertPromise;
         
-        $this.html('Verifying...');
+        //$this.html('Verifying...');
         
-        var readPromise = DocumentManager.getDocumentForPath($this.data('file'));
+        // var readPromise = DocumentManager.getDocumentForPath($this.data('file'));
         
-        readPromise.fail(function() {
+        // readPromise.fail(function() {
             convertPromise = nodeConnection.domains.azenc.convertFileEncoding($this.data('file'));
             
             convertPromise.fail(function () {
@@ -59,11 +59,11 @@ define(function (require, exports, module) {
                 console.log('[Az-Enc] converted');
                 $this.html('Converted');
             });
-        });
+        // });
         
-        readPromise.done(function() {
-            $this.html('Is ready to use');
-        });
+        //readPromise.done(function() {
+        //    $this.html('Is ready to use');
+        //});
     }
     
     function showRows(files) {
@@ -105,6 +105,7 @@ define(function (require, exports, module) {
     
     // Function to run when the menu item is clicked
     function handleDetectEncoding() {
+        console.log(ProjectManager.getSelectedItem());
         if (ProjectManager.getSelectedItem()._isDirectory) {
             chain(detectEncoding);
         } else {
